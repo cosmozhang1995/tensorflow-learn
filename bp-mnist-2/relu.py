@@ -59,11 +59,11 @@ class ReluMnistNet:
 
         time1 = time.time()
         for i in range(10000):
+            batch_idxes = np.arange(data_size)
+            np.random.shuffle(batch_idxes)
             for j in range(data_size/batch_size):
                 # random batch
-                batch_idx = np.arange(data_size)
-                np.random.shuffle(batch_idx)
-                batch_idx = batch_idx[0:batch_size]
+                batch_idx = batch_idxes[j*batch_size:(j+1)*batch_size]
                 batch_xs = mnist.train.images[batch_idx]
                 batch_ys = mnist.train.labels[batch_idx]
                 # ordered batch

@@ -12,7 +12,8 @@ for lr in learning_rates:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "SGD: \n\tLearning rate: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "SGD: \n\tLearning rate: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 
@@ -24,7 +25,8 @@ for lr in learning_rates:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "SGD with momentum: \n\tLearning rate: %f\n\tMomentum: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "SGD with momentum: \n\tLearning rate: %f\n\tMomentum: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 lr = 0.01
@@ -34,7 +36,8 @@ for alpha in alphas:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "SGD with momentum: \n\tLearning rate: %f\n\tMomentum: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "SGD with momentum: \n\tLearning rate: %f\n\tMomentum: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 
@@ -46,7 +49,8 @@ for lr in learning_rates:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "SGD with Nesterov-momentum: \n\tLearning rate: %f\n\tMomentum: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "SGD with Nesterov-momentum: \n\tLearning rate: %f\n\tMomentum: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 lr = 0.01
@@ -56,7 +60,8 @@ for alpha in alphas:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "SGD with Nesterov-momentum: \n\tLearning rate: %f\n\tMomentum: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "SGD with Nesterov-momentum: \n\tLearning rate: %f\n\tMomentum: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 
@@ -68,7 +73,8 @@ for lr in learning_rates:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "AdaGrad: \n\tLearning rate: %f\n\tInitial accumulation: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "AdaGrad: \n\tLearning rate: %f\n\tInitial accumulation: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 lr = 0.01
@@ -78,7 +84,8 @@ for alpha in alphas:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "AdaGrad: \n\tLearning rate: %f\n\tInitial accumulation: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "AdaGrad: \n\tLearning rate: %f\n\tInitial accumulation: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 
@@ -90,7 +97,8 @@ for lr in learning_rates:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "RMSProp: \n\tLearning rate: %f\n\tInitial accumulation: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "RMSProp: \n\tLearning rate: %f\n\tInitial accumulation: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 lr = 0.01
@@ -100,7 +108,8 @@ for alpha in alphas:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "RMSProp: \n\tLearning rate: %f\n\tInitial accumulation: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "RMSProp: \n\tLearning rate: %f\n\tInitial accumulation: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, alpha, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 
@@ -114,7 +123,8 @@ for lr in learning_rates:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "Adam: \n\tLearning rate: %f\n\tBeta1: %f, Beta2: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, beta1, beta2, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "Adam: \n\tLearning rate: %f\n\tBeta1: %f, Beta2: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, beta1, beta2, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 lr = 0.01
@@ -125,7 +135,8 @@ for lr in learning_rates:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "Adam: \n\tLearning rate: %f\n\tBeta1: %f, Beta2: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, beta1, beta2, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "Adam: \n\tLearning rate: %f\n\tBeta1: %f, Beta2: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, beta1, beta2, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 lr = 0.01
@@ -136,7 +147,8 @@ for alpha in alphas:
     learner.prepare()
     result, time = learner.run()
     learner.close()
-    result_str = "Adam: \n\tLearning rate: %f\n\tBeta1: %f, Beta2: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, beta1, beta2, time, result[0][len(result[0])-1], result[1][len(result[1])-1])
+    final_result = result[len(result)-1]
+    result_str = "Adam: \n\tLearning rate: %f\n\tBeta1: %f, Beta2: %f\n\tTime used: %ds\n\tFinal accuracy: %f (train) ;  %f (test)" % (lr, beta1, beta2, time, final_result[0], final_result[1])
     fp.write(result_str + "\n")
     print result_str
 
