@@ -16,12 +16,12 @@ def bias_variable(shape):
 # train
 
 x = tf.placeholder(tf.float32, [None, 784])
-W = tf.Variable(tf.zeros([784,10]))
-b = tf.Variable(tf.zeros([10]))
+y_ = tf.placeholder(tf.float32, [None, 10])
+
+W1 = weight_variable([5 5 1 3])
+b1 = tf.Variable(tf.zeros([10]))
 
 y = tf.nn.softmax( tf.matmul(x,W) + b )
-
-y_ = tf.placeholder(tf.float32, [None, 10])
 
 cross_entropy = -tf.reduce_sum(y_*tf.log(y))
 
