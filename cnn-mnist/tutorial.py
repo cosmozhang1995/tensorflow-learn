@@ -119,3 +119,4 @@ if __name__ == '__main__':
         print "Epoch %d: accuracy = %f" % (epoch, a)
         for i in range(batch_num):
             net.train_step()
+
