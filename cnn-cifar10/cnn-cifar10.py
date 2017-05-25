@@ -1,26 +1,23 @@
 import tensorflow as tf
-import tensorflow.examples.tutorials.mnist.input_data as input_data
-import os,sys
+import numpy as np
+from cifar10 import dataset as cifar10dataset
 
 # fetch dataset
-
-mnist = input_data.read_data_sets("MNIST_data/", one_hot=True, reshape=False)
-# mnist = input_data.read_data_sets("MNIST_data/", one_hot=True, reshape=True)
 
 def weight_variable(shape, stddev=0.1):
     initial = tf.truncated_normal(shape, stddev=stddev)
     return tf.Variable(initial)
 
-def bias_variable(shape, val=0.1):
+def bias_variable(shape, val=0.0):
     initial = tf.constant(val, shape=shape)
     return tf.Variable(initial)
 
 # train
 
-class MnistCNN:
+class Cifar10CNN:
     def __init__(self):
         self.saver = None
-        self.x = tf.placeholder(tf.float32, [None, 28, 28, 1])
+        self.x = tf.placeholder(tf.float32, [None, 32, 32, 3])
         # self.x = tf.placeholder(tf.float32, [None, 784])
         self.y = tf.placeholder(tf.float32, [None, 10])
         self.keep_prob = tf.placeholder(tf.float32)
@@ -35,8 +32,7 @@ class MnistCNN:
         self.sess = None
 
     # kernels: [ ( conv_width_or_height, channels, max_pool_width_or_height ) ]
-    def construct(self, kernels=[(5,32,2), (5,64,2)], fulls=[1024]):
-        # best accuracy: (kernels=[(5,32,2), (5,96,2)], fulls=[1024])
+    def construct(self, kernels=[(5,24,2), (5,72,2), (5,120,1)], fulls=[84]):
         y = self.x
         outChan = None
         outWidth = None
@@ -132,15 +128,25 @@ class MnistCNN:
         self.evaluate()
         self.initialize(filename)
 
-    def train_step(self, batch_size=100, evaluate=False):
-        batch_xs, batch_ys = mnist.train.next_batch(batch_size)
+    def train_step(self, batch_size=100, evaluate=False, loss=False):
+        # batch = cifar10dataset.train.next_batch(batch_size)
+        # batch_xs = batch.data
+        # batch_ys = batch.labels
+        lst = np.array(range(50000))
+        np.random.shuffle(lst)
+        lst = lst[0:100]
+        batch_xs = cifar10dataset.train.data[lst,:,:,:]
+        batch_ys = cifar10dataset.train.labels[lst,:]
+        # print batch_xs[:,16,16,1]
         self.sess.run(self.train, feed_dict = {self.x: batch_xs, self.y: batch_ys, self.keep_prob: 0.5})
         # print self.sess.run(self.yPredition, feed_dict = {self.x: batch_xs, self.y: batch_ys})
+        # print "prediction", np.argmax( self.sess.run(self.yPredition, feed_dict = {self.x: batch_xs, self.y: batch_ys}) , axis=1)
+        # print "label", np.argmax( batch_ys , axis = 1 )
         if evaluate:
             return self.sess.run([self.accuracy, self.cross_entropy], feed_dict = {self.x: batch_xs, self.y: batch_ys, self.keep_prob: 1})
 
     def test_step(self):
-        return self.sess.run([self.accuracy, self.cross_entropy], feed_dict = {self.x: mnist.test.images, self.y: mnist.test.labels, self.keep_prob: 1})
+        return self.sess.run([self.accuracy, self.cross_entropy], feed_dict = {self.x: cifar10dataset.test.data, self.y: cifar10dataset.test.labels, self.keep_prob: 1})
 
     def outNames(self):
         return self.outs.keys()
@@ -151,7 +157,7 @@ class MnistCNN:
 
     def trainEpoches(self, epoches=1):
         batch_size = 100
-        batch_num = mnist.train.images.shape[0] / batch_size
+        batch_num = cifar10dataset.train.data.shape[0] / batch_size
         for epoch in range(epoches):
             for i in range(batch_num):
                 self.train_step()
@@ -168,16 +174,12 @@ def prepareNet(filename = None):
     net.prepare(filename)
     return net
 
-save_dir = "../save.ckpt"
-save_filename = "save.ckpt"
-save_path = save_dir + "/" + save_filename
-save_epoch_path = save_path + ".epoch"
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         tf.device("/gpu:1")
         batch_size = 100
-        batch_num = mnist.train.images.shape[0] / batch_size
+        batch_num = cifar10dataset.train.data.shape[0] / batch_size
         net = MnistCNN()
         start_epoch = 0
         if os.path.exists(save_dir):
@@ -208,7 +210,7 @@ if __name__ == '__main__':
             print "Params:", n.outNames()
             w1 = n.readParam('w1')
             w2 = n.readParam('w2')
-            im = n.sess.run(n.outs['y1c'], feed_dict = {n.x: mnist.test.images[0:1,:,:,:]})
+            im = n.sess.run(n.outs['y1c'], feed_dict = {n.x: cifar10dataset.test.data[0:1,:,:,:]})
             import scipy.io as sio
             sio.savemat("/home/cosmo/downloads/w.mat", {'w1':w1, 'w2':w2, 'im':im})
         else:
@@ -218,8 +220,6 @@ if __name__ == '__main__':
             print "Params:", n.outNames()
             w1 = n.readParam('w1')
             w2 = n.readParam('w2')
-            im = n.sess.run(n.outs['y1c'], feed_dict = {n.x: mnist.test.images[0,:,:,:]})
+            im = n.sess.run(n.outs['y1c'], feed_dict = {n.x: cifar10dataset.test.data[0,:,:,:]})
             import scipy.io as sio
             sio.savemat("/home/cosmo/downloads/w.mat", {'w0':w0, 'w1':w1, 'w2':w2, 'im':im})
-
-
